@@ -15,13 +15,13 @@ Projeto da disciplinas de Lógica de Programação 3 (Web), Design de Interfaces
 
 6. Janio Pierre
 
-7.leonardo mendes
+7. Leonardo Mendes
 
 8.
 
 9.
 
-10.
+10. Synara Silva
 
 # Requisitos Funcionais (Vrs 0.1)
 
