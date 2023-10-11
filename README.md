@@ -13,7 +13,7 @@ Projeto da disciplinas de Lógica de Programação 3 (Web), Design de Interfaces
 
 5. Josuel Santana
 
-6. 
+6. Janio Pierre
 
 7.
 
