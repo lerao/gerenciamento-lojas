@@ -21,4 +21,4 @@ Projeto da disciplinas de Lógica de Programação 3 (Web), Design de Interfaces
 
 9.
 
-10. 
+10. Synara Silva
