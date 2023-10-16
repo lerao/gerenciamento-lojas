@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>:: Gerenciamento de Estoque ::</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <link href="dist/css/style.min.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color: #eee;">
+
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin5">
+
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <a class "navbar-brand" href="index.html">
+                        <b class="logo-icon p-l-10">
+                            <img src="Icons/png/caixa.png" alt="Ícone PNG" style="width: 30%;"> ESTOQUE
+                        </b>
+                    </a>
+
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+
+                </div>
+
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+
+                    <ul class="navbar-nav float-left mr-auto">
+
+                    </ul>
+
+                    <ul class="navbar-nav float-right">
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                                    src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                        class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                        class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+
+                    <ul id="sidebarnav" class="p-t-30">
+
+                        <li class="sidebar-item"> 
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html" aria-expanded="false">
+                                <i class="mdi mdi-view-dashboard"></i>
+                                <span class="hide-menu">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item"> 
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="cadastro1.html" aria-expanded="false">
+                                <i class="fa-solid fa-fingerprint"></i>
+                                <span class="hide-menu">Cadastro de usuários</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="clientes.html"
+                                aria-expanded="false">
+                                <i class="mdi mdi-account"></i>
+                                <span class="hide-menu">Clientes</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="produtos.html"
+                                aria-expanded="false">
+                                <i class="mdi mdi-package"></i>
+                                <span class="hide-menu">Produtos</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <h2>Cadastro De Usuários</h2>
+                <div class="form-group row">
+                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Nome do Usuário</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="fname" placeholder="Nome">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="lname" class="col-sm-3 text-right control-label col-form-label">Nível de Permissão</label>
+                    <div class="col-sm-9">
+                        <select class="form-control">
+                            <option value="1">Nível 1 - Editar Produtos</option>
+                            <option value="2">Nível 2 - Editar e Cadastrar</option>
+                            <option value="3">Nível 3 - Editar, Cadastrar e deletar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for "lname" class="col-sm-3 text-right control-label col-form-label">Senha</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="lname" placeholder="Digite a senha">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <label for="cono1" class="control-label col-form-label">
+                            <input class="btn btn-primary" type="submit" value="Cadastrar Usuário">
+                        </label>
+                        <label for="cono1" class="control-label col-form-label">
+                            <input class="btn btn-primary" type="reset" value="Limpar">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer text-center">
+                Todos os direitos reservados para a turma DS 2023.2 ETEAVS ❤.
+            </footer>
+        </div>
+    </div>
+
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="dist/js/jquery.ui.touch-punch-improved.js"></script>
+    <script src="dist/js/jquery-ui.min.js"></script>
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="dist/js/waves.js"></script>
+    <script src="dist/js/sidebarmenu.js"></script>
+    <script src="dist/js/custom.min.js"></script>
+    <script src="assets/libs/moment/min/moment.min.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var nomeInput = document.getElementById("fname");
+            var senhaInput = document.getElementById("lname");
+        
+            // Adicionar um ouvinte de evento para o formulário
+            document.querySelector("input[type=submit]").addEventListener("click", function (e) {
+                // Verificar o nome para espaços em branco
+                if (nomeInput.value.trim() === "") {
+                    alert("Nome não pode estar em branco.");
+                    e.preventDefault();
+                } else {
+                    var regex = /^[a-zA-Z]+$/;
+                    if (!regex.test(nomeInput.value)) {
+                        alert("Coloque um usuário válido!");
+                        e.preventDefault();
+                    }
+                }
+        
+                if (senhaInput.value.length < 6) {
+                    alert("A senha deve ter no mínimo 6 caracteres.");
+                    e.preventDefault();
+                }
+                nomeInput.value = "";
+                senhaInput.value = "";
+            });
+        });
+    </script>
+</body>
+</html>
