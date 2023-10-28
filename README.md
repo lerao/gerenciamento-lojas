@@ -17,7 +17,7 @@ Projeto da disciplinas de Lógica de Programação 3 (Web), Design de Interfaces
 
 7. Leonardo Mendes
 
-8.
+8. Henrique Bernardo
 
 9.
 
