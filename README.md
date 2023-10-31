@@ -19,7 +19,7 @@ Projeto da disciplinas de Lógica de Programação 3 (Web), Design de Interfaces
 
 8.
 
-9.
+9. José Gabriel
 
 10. Synara Silva
 
