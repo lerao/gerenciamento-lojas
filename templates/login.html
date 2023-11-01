@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>::  StoreManager - SM :: Login</title>
+
+    <link href="{{ url_for('static', filename='dist/css/style.min.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
+        <div class="auth-box bg-dark border-secondary">
+            <div id="loginform">
+                <div class="text-center p-t-10 p-b-20">
+                    <span class="logo-icon"><img src="{{ url_for('static', filename='logo_sm.png') }}" alt="logo" width="50%"> 
+                    <br><span style="font-size: 20px; font-weight: bold; line-height: inherit; white-space: nowrap; color: white">StoreManager</span></span>
+                </div>
+                <!-- Form -->
+                <form class="form-horizontal m-t-20" id="loginform" action="/login" method="post">
+                    <div class="row p-b-30">
+                        <div class="col-12">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-success text-white" id="basic-addon1"><i class="ti-user"></i></span>
+                                </div>
+                                <input type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required="">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-warning text-white" id="basic-addon2"><i class="ti-pencil"></i></span>
+                                </div>
+                                <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border-top border-secondary">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <div class="p-t-20">
+                                    <button class="btn btn-info" id="to-recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
+                                    <button class="btn btn-success float-right" type="submit">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+   <script src="{{ url_for('static', filename='assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dist/js/jquery.ui.touch-punch-improved.js') }}"></script>
+    <script src="{{ url_for('static', filename='dist/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/extra-libs/sparkline/sparkline.js') }}"></script>
+    <script src="{{ url_for('static', filename='dist/js/waves.js') }}"></script>
+    <script src="{{ url_for('static', filename='dist/js/sidebarmenu.js') }}"></script>
+    <script src="{{ url_for('static', filename='dist/js/custom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/libs/moment/min/moment.min.js') }}"></script>
+
+</body>
+</html>
