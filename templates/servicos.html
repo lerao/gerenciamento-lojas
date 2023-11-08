@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Serviços
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block conteudo %}
+
+<form method="POST" action="/submit">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required><br>
+
+    <label for="descricao">Descrição do Serviço:</label><br>
+    <textarea id="descricao" name="descricao" rows="4" cols="50" required></textarea><br>
+
+    <label for="link_contato">Link para Contato:</label>
+    <input type="text" id="link_contato" name="link_contato" required><br>
+
+    <label for="categoria">Escolha a Categoria:</label>
+    <select id="categoria" name="categoria" required>
+        <option value="categoria1">Categoria 1</option>
+        <option value="categoria2">Categoria 2</option>
+        <option value="categoria3">Categoria 3</option>
+    </select><br>
+
+    <input type="submit" value="Enviar">
+</form>
+<table border="1">
+  <tr>
+      <th>Nome</th>
+      <th>Descrição do Serviço</th>
+      <th>Link para Contato</th>
+      <th>Categoria</th>
+  </tr>
+  <tr>
+      <td>Empresa A</td>
+      <td>Serviço de consultoria em marketing digital.</td>
+      <td><a href="https://www.empresaA.com/contato">Contato</a></td>
+      <td>Categoria 1</td>
+  </tr>
+  <tr>
+      <td>Empresa B</td>
+      <td>Desenvolvimento de aplicativos móveis sob medida.</td>
+      <td><a href="https://www.empresaB.com/contato">Contato</a></td>
+      <td>Categoria 2</td>
+  </tr>
+  <tr>
+      <td>Empresa C</td>
+      <td>Serviços de design gráfico e branding.</td>
+      <td><a href="https://www.empresaC.com/contato">Contato</a></td>
+      <td>Categoria 1</td>
+  </tr>
+  <tr>
+      <td>Empresa D</td>
+      <td>Hospedagem web e serviços de servidor dedicado.</td>
+      <td><a href="https://www.empresaD.com/contato">Contato</a></td>
+      <td>Categoria 3</td>
+  </tr>
+  <tr>
+      <td>Empresa E</td>
+      <td>Marketing de mídia social e gerenciamento de campanhas.</td>
+      <td><a href="https://www.empresaE.com/contato">Contato</a></td>
+      <td>Categoria 2</td>
+  </tr>
+  <tr>
+      <td>Empresa F</td>
+      <td>Desenvolvimento de software personalizado.</td>
+      <td><a href="https://www.empresaF.com/contato">Contato</a></td>
+      <td>Categoria 3</td>
+  </tr>
+  <tr>
+      <td>Empresa G</td>
+      <td>Serviços de consultoria financeira e contabilidade.</td>
+      <td><a href="https://www.empresaG.com/contato">Contato</a></td>
+      <td>Categoria 1</td>
+  </tr>
+  <tr>
+      <td>Empresa H</td>
+      <td>Desenvolvimento de jogos para dispositivos móveis.</td>
+      <td><a href="https://www.empresaH.com/contato">Contato</a></td>
+      <td>Categoria 2</td>
+  </tr>
+  <tr>
+      <td>Empresa I</td>
+      <td>Serviços de consultoria de TI e soluções de rede.</td>
+      <td><a href="https://www.empresaI.com/contato">Contato</a></td>
+      <td>Categoria 3</td>
+  </tr>
+  <tr>
+      <td>Empresa J</td>
+      <td>Desenvolvimento de sites e design web.</td>
+      <td><a href="https://www.empresaJ.com/contato">Contato</a></td>
+      <td>Categoria 1</td>
+  </tr>
+</table>
+
+{% endblock %}
+
+{% block js %}{% endblock %}
