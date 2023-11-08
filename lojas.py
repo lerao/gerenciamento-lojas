@@ -6,4 +6,4 @@ lojas_blueprint = Blueprint('lojas', __name__)
 
 @lojas_blueprint.route("/lojas")
 def lojas():
-  return render_template("dashboard.html")
+  return render_template("empresa.html")
