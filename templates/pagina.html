@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+            <title>TinyMCE WYSIWYG Bootstrap</title>
+            
+            <!-- TinyMCE CDN -->
+            <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+            
+            <script>
+              tinymce.init({
+                selector: 'textarea#editor',
+              });
+            </script>
+            <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+            <script>
+              tinymce.init({
+                selector: 'textarea#editor',
+                skin: 'bootstrap',
+                plugins: 'lists, link, image, media',
+                toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+                menubar: false,
+              });
+            </script>
+            <script>
+                tinymce.init({
+                selector: 'textarea#editor',
+                plugins: 'lists, link, image, media',
+                toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+                menubar: false,
+                setup: (editor) => {
+                    // Apply the focus effect
+                    editor.on("init", () => {
+                    editor.getContainer().style.transition = "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+                      });
+                    editor.on("focus", () => { (editor.getContainer().style.boxShadow = "0 0 0 .2rem rgba(0, 123, 255, .25)"),
+                    (editor.getContainer().style.borderColor = "#80bdff");
+                      });
+                    editor.on("blur", () => {
+                    (editor.getContainer().style.boxShadow = ""),
+                    (editor.getContainer().style.borderColor = "");
+                     });
+                   },
+                });
+              </script>
+              <script>
+                tinymce.init({
+                  selector: 'textarea#editor',
+                  skin: 'bootstrap', //The TinyMCE Bootstrap skin
+                  plugins: 'lists, link, image, media',
+                  […]//Omitted lines are identical to step 2                       
+                });
+              </script>
+</head>
+<body>
+    <h1> Páginas </h1>
+  <form id="paginaForm">
+      <div class="form-group">
+          <label for="nomePagina">Nome da Página:</label>
+          <input type="text" class="form-control" id="nomePagina" placeholder="" required>
+          <br><br>
+        <label for="tipoPagina">Tipo da Página:</label>  
+        <select class="form-select" aria-label="Default select example">
+        <option selected>selecione a página</option>
+        <option value="1">Página 1</option>
+        <option value="2">Página 2</option>
+        <option value="3">Página 3</option>
+      </select>
+  
+    
+      </div>
+
+                <h2 class="h2 mb-4">Descrição da Página</h2>
+                <label>Descreva sua página</label>
+                <div class="form-group">
+                    <textarea id="editor"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">enviar</button>
+            </div>
+        </div>
+    </div>
+  
+
+
+  
+    
+      </div>
+</body>
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</html>
