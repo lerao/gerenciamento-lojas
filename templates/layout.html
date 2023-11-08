@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Configuração de Página
+{% endblock %}
+
+{% block css %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .config {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        text-align: center;
+        max-width: 400px;
+    }
+
+    label {
+        display: block;
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    input[type="text"], input[type="color"] {
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .checkbox-group {
+        text-align: left;
+        margin-top: 5px;
+    }
+
+    input[type="checkbox"] {
+        margin-right: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block conteudo %}
+<div class="config">
+    <h1>Configuração de Página</h1>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome">
+
+    <label for="cor-fundo">Cor de Fundo:</label>
+    <input type="color" id="cor-fundo" name="cor-fundo">
+
+    <div class="checkbox-group">
+        <label for="institucional">Menu Institucional:</label>
+        <input type="checkbox" id="institucional" name="menu-institucional">
+    </div>
+
+    <div class="checkbox-group">
+        <label for="servicos">Menu de Serviços:</label>
+        <input type="checkbox" id="servicos" name="menu-servicos">
+    </div>
+
+    <div class="checkbox-group">
+        <label for="produtos">Menu de Produtos:</label>
+        <input type="checkbox" id="produtos" name="menu-produtos">
+    </div>
+
+    <label for="imagem">Imagem:</label>
+    <input type="file" id="imagem" name="imagem">
+
+    <label for="posicao-menu">Posição do Menu:</label>
+    <select id="posicao-menu" name="posicao-menu">
+        <option value="esquerda">Esquerda</option>
+        <option value="direita">Direita</option>
+    </select>
+
+    <label for="logo">Logo:</label>
+    <input type="file" id="logo" name="logo">
+</div>
+{% endblock %}
+
+{% block js %}{% endblock %}
