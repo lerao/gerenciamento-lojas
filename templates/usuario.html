@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Título de Teste
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block conteudo %}
+
+  <h2>gerenciamento de usuario</h2>
+  
+ <form>
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Formulário de Usuário</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Formulário de Usuário</h2>
+        <form>
+            <div class="form-group">
+                <label for="id">ID:</label>
+                <input type="text" class="form-control" id="id" placeholder="ID">
+            </div>
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" id="nome" placeholder="Nome">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" class="form-control" id="senha" placeholder="Senha">
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/
+ </form> 
+ 
+ 
+
+    <div class="container">
+        <h2>Lista de Usuários</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>João da Silva</td>
+                    <td>joao@example.com</td>
+                    <td>
+                        <a href="#" class="btn btn-info">Editar</a>
+                        <a href="#" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Maria Souza</td>
+                    <td>maria@example.com</td>
+                    <td>
+                        <a href="#" class="btn btn-info">Editar</a>
+                        <a href="#" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+                <!-- Adicione mais linhas de acordo com seus dados -->
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block js %}{% endblock %}
