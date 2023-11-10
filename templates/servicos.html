@@ -4,7 +4,51 @@
   Serviços
 {% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.config {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+}
+
+input[type="text"], input[type="color"] {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.checkbox-group {
+    text-align: left;
+    margin-top: 5px;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+</style>
+{% endblock %}
 
 {% block conteudo %}
 
