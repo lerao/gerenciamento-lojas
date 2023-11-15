@@ -8,40 +8,43 @@
 
 {% block conteudo %}
 
-  <h2>Consulta Perguntas Frequentes</h2>
-  <form action="/faqs" method="GET">
+  <h2>Cadastro de Perguntas Frequentes</h2>
+  <form id="faqform">
       
-      <div class="perguntasfrequentes"
+    <div class="form-group">
 
-          <label for="titulo">Pergunta:</label>
-          <input type="text" class="form-control" id="titulo" name="pergunta" required>
+        <label for="Titulo">Pergunta:</label>
+        <input type="text" class="form-control" id="titulo" name="pergunta" required>
+        <br><br>
+        <label for="descricao">Resposta:</label>
+        <input type="text" id="descricao" name="descricao">
+        <br><br>
+        <label for="data">data:</label>
+        <input type="date" id="data" name="data">
+        
+    </div>   
 
-          <label for="descricao">Descrição:</label>
-          <input type="text" id="descricao" name="descricao">
-
-          <label for="data">data:</label>
-          <input type="date" id="data" name="data">
-      </div>   
-
-      <button type="submit" class="btn btn-primary">Buscar Pergunta</button>
+      <button type="submit" class="btn btn-primary">Salvar</button>
   </form>
   <br><br>
-  <h2>Lista de Categorias</h2>
-  <table class="table">
+
+  <h2>Pergunta Frequentes</h2>
+
+  <table class="table table-striped">
       <thead>
           <tr>
-              <th>titulo</th>
-              <th>descrição</th>
-              <th>data</th>
+              <th>Titulo</th>
+              <th>Descrição</th>
+              <th>Data</th>
           </tr>
       </thead>
       <tbody id="tabelafaqs">
           
-          {% for faqs in dados %}
+          {% for FAQ in dados %}
           <tr>
-            <td>{{faqs['titulo']}}</td>
-            <td>{{faqs['descricao']}}</td>
-            <td>{{faqs['data']}}</td>
+            <td>{{FAQ['titulo']}}</td>
+            <td>{{FAQ['descricao']}}</td>
+            <td>{{FAQ['data']}}</td>
         </tr>
 
           {% endfor %}
