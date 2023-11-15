@@ -1,6 +1,5 @@
 
 from flask import Flask, render_template, request, redirect, Blueprint
-import database as db
 
 usuarios_blueprint = Blueprint('usuarios', __name__)
 

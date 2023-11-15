@@ -1,6 +1,5 @@
 
 from flask import Flask, render_template, request, redirect, Blueprint
-import database as db
 
 produtos_blueprint = Blueprint('produtos', __name__)
 
