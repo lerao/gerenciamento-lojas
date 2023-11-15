@@ -11,14 +11,17 @@
   <h2>Cadastro de Categorias</h2>
   <form id="noticiasForm">
       <div class="form-group">
-          <label for="nomeNoticias">Titulo:</label>
-          <textarea for="noticias"></textarea>
-          <label for="autor">Autor:</label>
-          <input for="autor" placeholder="Autor:">
-          <label for="Data">Data:</label>
-          <input for="data" placeholder="Data:">
+          <label for="nomeNoticias" class="form-label">Titulo:</label>
+          <br>
+          <textarea tipe="text"></textarea>
+          <label for="autor" class="form-label">Autor:</label>
+          <br>
+          <input for="autor" class="form-control">
+          <br>
+          <label for="Data" class="form-label">Data:</label>
+          <input for="data" class="form-control">
              </div>
-      <button type="submit" class="btn btn-primary">Adicionar Noticias</button>
+      <button type="submit" class="btn btn-primary">Salvar</button>
   </form>
   <br><br>
   <h2>Noticias</h2>
@@ -27,6 +30,9 @@
           <tr>
               <th>ID</th>
               <th>Titulo das Noticias</th>
+              <th>Conteudo</th>
+              <th>Autor</th>
+              <th>Data</th>
           </tr>
       </thead>
       <tbody id="tabelaNoticias">
@@ -36,7 +42,7 @@
             <td>{{titulo[0]}}</td>
             <td>{{conteudo[1]}}</td>
             <td>{{autor[2]}}</td>
-            <td>{{data[1]}}</td>
+            <td>{{data[3]}}</td>
 
 
         </tr>
