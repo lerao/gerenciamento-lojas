@@ -1,58 +1,60 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Lojas
+  Informações da Empresa
 {% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}
+  <!-- Adicione estilos específicos para a página de informações da empresa, se necessário -->
+  <link rel="stylesheet" href="caminho/para/seus/estilos.css">
+{% endblock %}
 
-{% block conteudo %}
+{% block content %}
 
-  <h2>Cadastro de Lojas</h2>
+  <div class="container">
+    <h2>Cadastro de Informações da Empresa</h2>
+    <form id="empresaInfoForm">
+      <div class="form-group">
+        <label for="nomeEmpresa">Nome da Empresa:</label>
+        <input type="text" class="form-control" id="nomeEmpresa" placeholder="Nome da Empresa" required>
+      </div>
 
-  <!-- Falta Formulário -->
-  
-  <h2>Lista de Lojas</h2>
-  
-<table class="table">
-    <tr>
-        <th>Campo</th>
-        <th>Valor</th>
-    </tr>
-    <tr>
-        <td>Nome da Empresa</td>
-        <td>Blacek Cell</td>
-    </tr>
-    <tr>
-        <td>CNPJ</td>
-        <td>01.010.010/1010-10</td>
-    </tr>
-    <tr>
-        <td>Endereço</td>
-        <td>Rua Monteiro Lobato, 123</td>
-    </tr>
-    <tr>
-        <td>CEP</td>
-        <td>12345-678</td>
-    </tr>
-    <tr>
-        <td>Cidade</td>
-        <td>Garanhuns</td>
-    </tr>
-    <tr>
-        <td>Estado</td>
-        <td>PE</td>
-    </tr>
-    <tr>
-        <td>Telefone</td>
-        <td>(87) 3030-0300</td>
-    </tr>
-    <tr>
-        <td>WhatsApp</td>
-        <td>(87) 98173-5792</td>
-    </tr>
-</table>
+      <div class="form-group">
+        <label for="cnpjEmpresa">CNPJ:</label>
+        <input type="text" class="form-control" id="cnpjEmpresa" placeholder="CNPJ" required>
+      </div>
+
+      <div class="form-group">
+        <label for="cepEmpresa">CEP:</label>
+        <input type="text" class="form-control" id="cepEmpresa" placeholder="CEP" required>
+      </div>
+
+      <div class="form-group">
+        <label for="telefoneEmpresa">Telefone:</label>
+        <input type="tel" class="form-control" id="telefoneEmpresa" placeholder="Telefone">
+      </div>
+
+      <div class="form-group">
+        <label for="whatsappEmpresa">WhatsApp:</label>
+        <input type="tel" class="form-control" id="whatsappEmpresa" placeholder="WhatsApp">
+      </div>
+
+      <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Salvar Informações</button>
+    </form>
+
+    <div id="alertas">
+      <!-- Espaço para exibir os alertas -->
+    </div>
+
+    <!-- Restante do seu código JavaScript -->
+  </div>
 
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+  <script type='text/javascript'>
+    // Adicione aqui o restante do seu código JavaScript, conforme necessário
+    carregarDados();
+    // ...
+  </script>
+{% endblock %}
