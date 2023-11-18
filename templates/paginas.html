@@ -79,12 +79,15 @@
 
     function enviarFormulario() {
         // Recupera os valores dos campos
+        
         var nomePagina = document.getElementById("nomePagina").value;
-        var conteudoPagina = tinymce.get("editor").getContent();
+        var conteudoPagina = tinymce.get("editor").getContent().value;
         var descricaoPagina = document.getElementById("descricaoPagina").value;
 
         // Monta o JSON para envio
+        var idPagina = null;
         var dadosPagina = {
+            
             nome: nomePagina,
             conteudo: conteudoPagina,
             descricao: descricaoPagina
@@ -154,19 +157,18 @@
             <th>Nome</th>
             <th>Conteúdo</th>
             <th>Descrição</th>
-            <th>Opções</th>
         </tr>
     </thead>
     <tbody>
         {% for pagina in dados %}
-        <tr id="linha{{pagina["id"]}}">
+        <tr id="linha{{pagina['id']}}">
             <td>{{pagina["id"]}}</td>
             <td>{{pagina["nome"]}}</td>
             <td>{{pagina["conteudo"]}}</td>
             <td>{{pagina["descricao"]}}</td>
-            <td>
+            
                 <button type="button" class="btn btn-danger btn-sm"
-                    onClick="removerPagina({{pagina["id"]}})">
+                    onClick="removerPagina({{linha['id']}})">
                     Excluir
                 </button>
             </td>
@@ -174,12 +176,6 @@
         {% endfor %}
     </tbody>
 </table>
-
 {% endblock %}
 
-{% block js %}
-<script type='text/javascript'>
-    $(document).ready(function() {
-        $('#tabelaPaginas').DataTable();
-    });
-</script>
+
