@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Noticias
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block conteudo %}
+
+  <h2>Cadastro de Noticias</h2>
+  <br>
+  <form action="/noticias" method="GET">
+    <div class="form-group">
+          <label for="nomeNoticias" class="form-group">Titulo:</label>
+          <br>
+          <input for="nomeNoticias" class="form-control"  placeholder="Titulo" id="titulo">
+          <br>
+          <br>
+      </div>
+      <div class="form-group">
+        <label for="autor" class="form-group">Conteúdo:</label>
+          <br>
+          <textarea for="noticias" id="conteudo" class="form-control" placeholder="conteúdo" maxlength="350"></textarea>
+          <br>
+      </div>
+      <div class="form-group">
+        <label for="autor" class="form-group">Autor:</label>
+          <br>
+          <input for="autor" placeholder="Autor:" class="form-control" id="autor">
+          <br>
+      </div>
+      <div class="form-group">
+        <label for="Data" class="form-group">Data:</label>
+          <br>
+          <input for="data" tipe="datetime" placeholder="Data:" class="form-control" id="data">
+      </div>  
+      <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Salvar</button>
+  </form>
+  <br><br>
+
+  <div id="alertas">
+    <!-- Espaço para exibir os alertas -->
+</div>
+  <h2>Noticias</h2>
+ 
+<script>
+    
+  carregarDados();
+
+  function carregarDados() {
+       //Usamos o fetch para enviar os dados
+       fetch('http://127.0.0.1:5000/noticias', {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => response.json())
+      .then(response => {
+          console.log(response)
+          
+      })
+      .catch(error => {
+          console.error('Erro ao enviar a requisição:', error);
+          mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+      });
+  }
+
+  function enviarFormulario() {
+
+      //Recuperamos os valores dos form
+      var tituloNoticia = document.getElementById("titulo").value;
+      var conteudoNoticia = document.getElementById("conteudo").value;
+      var autorNoticia = document.getElementById("autor").value;
+      var dataNoticia = document.getElementById("data").value;
+
+      //Montamos o json para envio/cadastro
+      var dadosNoticia = {
+          titulo: tituloNoticia,
+          conteudo: conteudoNoticia,
+          autor: autorNoticia,
+          data: dataNoticia
+      };
+
+      //Usamos o fetch para enviar os dados
+      fetch('http://127.0.0.1:5000/noticias', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dadosNoticia)
+      })
+      .then(response => response.json())
+      .then(response => {
+          console.log(response)
+          console.log(response.status)
+          if (response.status === 201) {
+              mostrarAlerta('success', 'Noticia criada com sucesso!');
+          } else {
+              mostrarAlerta('danger', 'Erro ao criar a Noticia. Por favor, tente novamente.');
+          }
+      })
+      .catch(error => {
+          mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+      });
+
+      window.location.reload()
+  }
+
+  function mostrarAlerta(tipo, mensagem) {
+      // Crie um elemento de alerta dinamicamente
+      var alerta = document.createElement('div');
+      alerta.className = 'alert alert-' + tipo;
+      alerta.role = 'alert';
+      alerta.innerText = mensagem;
+
+      // Adicione o alerta à div 'alertas'
+      document.getElementById('alertas').appendChild(alerta);
+
+      // Remova o alerta após alguns segundos (opcional)
+      setTimeout(function() {
+          alerta.remove();
+      }, 5000);
+  }
+
+  async function removerNoticias(idNoticias) {
+    try {
+        // Usamos o fetch para enviar os dados
+        const response = await fetch(`http://127.0.0.1:5000/noticias/${idNoticias}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao excluir Noticia: ${response.statusText}`);
+        }
+
+        // Aguarda a conclusão da solicitação antes de continuar
+        await response.json();
+
+        // Remove a linha da tabela após a exclusão bem-sucedida
+        var linhaParaApagar = document.getElementById("linha" + idNoticias);
+        var tabela = linhaParaApagar.parentNode;
+        tabela.removeChild(linhaParaApagar);
+
+    } catch (error) {
+        console.error('Erro ao excluir Noticia:', error);
+        mostrarAlerta('danger', 'Erro ao excluir Noticia. Por favor, tente novamente.');
+    }
+}
+
+function editarFormulario(idNoticia) {
+    // Recupere os valores do formulário
+    var tituloNoticia = document.getElementById("titulo").value;
+    var conteudoNoticia = document.getElementById("conteudo").value;
+    var autorNoticia = document.getElementById("autor").value;
+    var dataNoticia = document.getElementById("data").value;
+
+    // Monte o JSON para envio/atualização
+    var dadosNoticia = {
+        titulo: tituloNoticia,
+        conteudo: conteudoNoticia,
+        autor: autorNoticia,
+        data_noticias: dataNoticia  // Corrigi o nome do campo para corresponder ao lado do servidor
+    };
+
+    // Use o fetch para enviar os dados
+    fetch(`http://127.0.0.1:5000/noticias/${idNoticia}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dadosNoticia)
+    })
+    .then(response => response.json())
+    .then(response => {
+        console.log(response);
+        if (response.message === 'Noticia atualizada com sucesso') {
+            mostrarAlerta('success', 'Noticia atualizada com sucesso!');
+        } else {
+            mostrarAlerta('danger', 'Erro ao atualizar a Noticia. Por favor, tente novamente.');
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao conectar-se ao servidor:', error);
+        mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+    });
+
+    window.location.reload();
+}
+
+  </script>
+
+<br><br>
+<h2>Lista de Noticias</h2>
+<table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaNoticias">
+  <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>Conteúdo</th>
+            <th>Autor</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for noticias in dados %}
+        <tr id="linha{{noticias['id']}}">
+          <td>{{noticias["id"]}}</td>
+          <td>{{noticias["titulo"]}}</td>
+          <td>{{noticias["conteudo"]}}</td>
+          <td>{{noticias["autor"]}}</td>
+          <td>{{noticias["data"]}}</td>
+            <td>
+                <a href="#" class="btn btn-info" tipe="button" onclick="editarFormulario({{noticias['id']}})">Editar</a>
+                <a href="#" class="btn btn-danger" tipe="button" onclick="removerNoticias({{noticias['id']}})">Excluir</a>
+            </td>
+            
+
+      </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block js %}
+<script type='text/javascript'>
+  $(document).ready(function() {
+      $('#tabelaNoticias').DataTable();
+  });
+  </script>
+{% endblock %}
+
+  
+

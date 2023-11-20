@@ -39,7 +39,7 @@ app.register_blueprint(faq_blueprint)
 app.register_blueprint(promocoes_blueprint)
 app.register_blueprint(layout_blueprint)
 app.register_blueprint(paginas_blueprint)
-app.register_blueprint(mailing_blueprint)
+app.register_blueprint(noticias_blueprint)
 
 if __name__ == "__main__":
   app.run(debug=True, port=5001)
