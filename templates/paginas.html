@@ -9,7 +9,7 @@
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 {% endblock %}
 
-{% block conteudo %}
+{% block conteudo %}  
 <h2>Cadastro de Páginas</h2>
     <div class="form-group">
         <label for="nomePagina">Nome da Página:</label>
@@ -26,18 +26,16 @@
         <div class="form-group">
             <textarea id="editor"></textarea>
             <br>
-        </div>
+    </div>
         <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Adicionar Página</button>
     </div>
     
     <div id="alertas">
         <!-- Espaço para exibir os alertas -->
     </div>
-{% endblock %}
 
-{% block js %}
-<script>
-    tinymce.init({
+    <script>
+     tinymce.init({
         selector: 'textarea#editor',
         skin: 'bootstrap',
         plugins: 'lists, link, image, media',
@@ -57,125 +55,138 @@
             });
         },
     });
-
-    carregarDados();  // Certifique-se de chamar carregarDados após a inicialização do TinyMCE
-
-    function carregarDados() {
-        fetch('http://127.0.0.1:5000/paginas', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.error('Erro ao enviar a requisição:', error);
-            mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
-        });
-    }
-
-    function enviarFormulario() {
-        // Recupera os valores dos campos
-        
-        var nomePagina = document.getElementById("nomePagina").value;
-        var conteudoPagina = tinymce.get("editor").getContent().value;
-        var descricaoPagina = document.getElementById("descricaoPagina").value;
-
-        // Monta o JSON para envio
-        var idPagina = null;
-        var dadosPagina = {
+    
+        carregarDados();
+    
+        function carregarDados() {
+             //Usamos o fetch para enviar os dados
+             fetch('http://127.0.0.1:5000/paginas', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response)
+                
+            })
+            .catch(error => {
+                console.error('Erro ao enviar a requisição:', error);
+                mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+            });
+        }
+    
+        function enviarFormulario() {
+    
+            //Recuperamos os valores dos form
+            var nomePagina = document.getElementById("nomePagina").value;
+            var conteudoPagina = tinymce.get("editor").getContent();
+            var descricaoPagina = document.getElementById("descricaoPagina").value;
             
-            nome: nomePagina,
-            conteudo: conteudoPagina,
-            descricao: descricaoPagina
-        };
-
-        // Envia os dados para o servidor
-        fetch('http://127.0.0.1:5000/paginas', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dadosPagina)
-        })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-            console.log(response.status);
-            if (response.status === 201) {
-                mostrarAlerta('success', 'Página criada com sucesso!');
-                // Recarrega a página após o sucesso da criação da página
-                window.location.reload();
-            } else {
-                mostrarAlerta('danger', 'Erro ao criar a Página. Por favor, tente novamente.');
-            }
-        })
-        .catch(error => {
-            mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
-        });
-    }
-
-    function mostrarAlerta(tipo, mensagem) {
-        // Crie um elemento de alerta dinamicamente
-        var alerta = document.createElement('div');
-        alerta.className = 'alert alert-' + tipo;
-        alerta.role = 'alert';
-        alerta.innerText = mensagem;
-
-        // Adicione o alerta à div 'alertas'
-        document.getElementById('alertas').appendChild(alerta);
-
-        // Remova o alerta após alguns segundos (opcional)
-        setTimeout(function() {
-            alerta.remove();
-        }, 5000);
-    }
-
-    function removerPagina(idPagina) {
-        // Usamos o fetch para enviar os dados
-        fetch('http://127.0.0.1:5000/paginas/' + idPagina, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        var linhaParaApagar = document.getElementById("linha" + idPagina);
-        var tabela = linhaParaApagar.parentNode;
-        tabela.removeChild(linhaParaApagar);
-    }
-</script>
-<br><br>
-<h2>Lista de Páginas</h2>
-<table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaPaginas">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Conteúdo</th>
-            <th>Descrição</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for pagina in dados %}
-        <tr id="linha{{pagina['id']}}">
-            <td>{{pagina["id"]}}</td>
-            <td>{{pagina["nome"]}}</td>
-            <td>{{pagina["conteudo"]}}</td>
-            <td>{{pagina["descricao"]}}</td>
+    
+            //Montamos o json para envio/cadastro
+            var dadosPagina = {
+                nome: nomePagina,
+                conteudo: conteudoPagina,
+                descricao: descricaoPagina
+            };
+    
+            //Usamos o fetch para enviar os dados
+            fetch('http://127.0.0.1:5000/paginas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dadosPagina)
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response)
+                console.log(response.status)
+                if (response.status === 201) {
+                    mostrarAlerta('success', 'Página criada com sucesso!');
+                } else {
+                    mostrarAlerta('danger', 'Erro ao criar a página. Por favor, tente novamente.');
+                }
+            })
+            .catch(error => {
+                mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+            });
+    
+            window.location.reload()
+        }
+    
+        function mostrarAlerta(tipo, mensagem) {
+            // Crie um elemento de alerta dinamicamente
+            var alerta = document.createElement('div');
+            alerta.className = 'alert alert-' + tipo;
+            alerta.role = 'alert';
+            alerta.innerText = mensagem;
+    
+            // Adicione o alerta à div 'alertas'
+            document.getElementById('alertas').appendChild(alerta);
+    
+            // Remova o alerta após alguns segundos (opcional)
+            setTimeout(function() {
+                alerta.remove();
+            }, 5000);
+        }
+    
+        function removerPagina(idPagina) {
+            //Usamos o fetch para enviar os dados
+            fetch('http://127.0.0.1:5000/paginas/'+idPagina, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             
-                <button type="button" class="btn btn-danger btn-sm"
-                    onClick="removerPagina({{linha['id']}})">
-                    Excluir
-                </button>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
-
-
+            var linhaParaApagar = document.getElementById("linha"+idCategoria);
+            var tabela = linhaParaApagar.parentNode;
+            tabela.removeChild(linhaParaApagar);
+    
+        }
+        </script>
+    
+      <br><br>
+      <h2>Lista de Páginas</h2>
+      <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaCategorias">
+          <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Conteudo</th>
+                  <th>Descricao</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for pagina in dados %}
+              <tr id="linha{{pagina['id']}}">
+                <td>{{pagina["id"]}}</td>
+                <td>{{pagina["nome"]}}</td>
+                <td>{{pagina["descricao"]}}</td>
+                <td>{{pagina["conteudo"]}}</td>
+                <td>
+    
+                    <button type="button" class="btn btn-danger btn-sm"
+                        onClick="removerPagina({{pagina['id']}})">
+                        Excluir
+                    </button>
+    
+                </td>
+            </tr>
+    
+              {% endfor %}
+          </tbody>
+      </table>
+    
+    {% endblock %}
+    
+    {% block js %}
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('#tabelaPaginas').DataTable();
+        });
+        </script>
+    {% endblock %}
