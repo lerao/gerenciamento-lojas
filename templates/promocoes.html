@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Título de Teste
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block conteudo %}
+
+  <h1>Promocao Form</h1>
+  <!-- Input de Data Final -->
+
+  <form id="categoriaForm">
+    <div class="form-group">
+      <label for="data_inicial">Data Inicial:</label>
+      <input type="date" class="form-control" id="data_inicial" name="data_inicial">
+    </div>
+    <div class="form-group">
+      <label for="data_final">Data Final:</label>
+      <input type="date" class="form-control" id="data_final" name="data_final">
+    </div>
+    <!-- Remova a linha com o erro de class -->
+  </form>
+
+  <!-- Input de produto -->
+  <div class="form-group">
+    <label for="produto">Produto:</label>
+    <input type="text" class="form-control" id="produto" name="produto">
+  </div>
+
+  <label for="ativo">Ativo:</label>
+  <input type="checkbox id="ativo" name="ativo">
+
+  <!-- Remova a tag de formulário duplicada aqui -->
+  <br><br>
+  <input type="submit" value="Submit">
+
+  <h2>Oferta Especial</h2>
+
+  <p>Aproveite nossa promoção exclusiva!</p>
+  <input type="text"class="form-control" id="promocao_exclusiva" name="promoção_exclusiva ">
+  <p>Produto em destaque: Nome do Produto</p>
+  <input type="text" id="Nome do Produto" name="ativo">
+  <p>Desconto: 20%</p>
+  <input type="text" id="ativo" name="ativo">
+  <p>Preço original: R$100,00</p>
+  <input type="text" id="ativo" name="ativo">
+  <p>Novo preço: R$80,00>
+    <br></br>
+    <input type="text" id="ativo" name="ativo">
+    <br></br>
+    <text>Compre Agora</text>
+    <br></br>
+   <input type="text" id="compre_Agora" name="ativo">
+    <br></br>
+  Teste conteúdo
+  <br></br>
+  <input type="text" id= "teste_conteudo" name="ativo">
+{% block js %}
+  <h2>Lista de Categorias</h2>
+  <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaCategorias">
+    <!-- ... conteúdo da tabela ... -->
+  </table>
+
+  <script type='text/javascript'>
+    $(document).ready(function () {
+      $('#tabelaCategorias').DataTable();
+    });
+  </script>
+{% endblock %}
+
+{% endblock %}
+
+
