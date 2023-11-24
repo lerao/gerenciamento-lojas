@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Pergunta Frequentes
+  Perguntas Frequentes
 {% endblock %}
 
 {% block css %}{% endblock %}
@@ -17,6 +17,7 @@
 
     <div class="form-group">
         <label for="Resposta">Resposta:</label>
+
         <textarea class="form-control" id="Resposta" placeholder="Resposta da pergunta (até 255 caracteres)" maxlength="255"></textarea>
     </div>
 
@@ -26,6 +27,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary" onclick="enviarFormulario()">Salvar</button>
+
 </form>
 
 <div id="alertas">
@@ -46,11 +48,13 @@
         })
         .then(response => response.json())
         .then(response => {
+
         console.log(response)
             
         })
         .catch(error => {
         console.error('Erro ao enviar a requisição:', error);
+
             mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
         });
     }
@@ -110,7 +114,9 @@
         }, 5000);
     }
 
+
     function removerFaq(idFaq) {
+
         //Usamos o fetch para enviar os dados
         fetch('http://127.0.0.1:5000/faq/'+idFaq, {
             method: 'DELETE',
@@ -160,6 +166,7 @@
     
 </script>
 
+
   <br><br>
   <h2>Lista de Perguntas</h2>
   <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaFaq">
@@ -182,6 +189,7 @@
             <td>
 
                 <button type="button" class="btn btn-danger btn-sm"
+
                     onClick="removerFaq({{faq['id']}})">
                     Excluir
                 </button>
