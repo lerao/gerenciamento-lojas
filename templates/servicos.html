@@ -27,62 +27,150 @@
       <input type="text" class="form-control" id="linkContato" placeholder="Link para contato">
     </div>
 
-    <div class="form-group">
+ <!--   <div class="form-group">
       <label for="categoriaServico">Escolha a Categoria:</label>
       <select class="form-control" id="categoriaServico">
-        <!-- Adicione as opções de categorias dinamicamente, se necessário -->
-        <option value="categoria1">Categoria 1</option>
-        <option value="categoria2">Categoria 2</option>
-        <!-- Adicione mais opções conforme necessário -->
+        {% for categoria in categorias %}
+          <option value='{{ categoria["id"] }}'>{{ categoria["nome"] }}</option>
+        {% endfor %}
       </select>
     </div>
-
+    -->
     <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Adicionar Serviço</button>
   </form>
 
-  <div id="alertas">
-    <!-- Espaço para exibir os alertas -->
-  </div>
-
-  <script>
-    // Restante do código permanece inalterado
-  </script>
-
   <br><br>
-  <h2>Lista de Serviços</h2>
-  <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaServicos">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Descrição</th>
-        <th>Link para Contato</th>
-        <th>Categoria</th>
-        <th>Opções</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for servico in dados %}
-      <tr id="linha{{servico["id"]}}">
-        <td>{{servico["id"]}}</td>
-        <td>{{servico["nome"]}}</td>
-        <td>{{servico["descricao"]}}</td>
-        <td>{{servico["link_contato"]}}</td>
-        <td>{{servico["categoria"]}}</td>
-        <td>
-          <button type="button" class="btn btn-danger btn-sm" onClick="removerServico({{servico["id"]}})">Excluir</button>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
 
 {% endblock %}
 
 {% block js %}
-  <script type='text/javascript'>
-    $(document).ready(function() {
-      $('#tabelaServicos').DataTable();
+<script>
+  carregarDados();
+
+function carregarDados() {
+    // Usamos o fetch para obter os serviços
+    fetch('http://127.0.0.1:5000/servicos', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(response => {
+        console.log(response);
+        // Faça o que for necessário com os dados recebidos, por exemplo, exibir em uma tabela
+    })
+    .catch(error => {
+        console.error('Erro ao enviar a requisição:', error);
+        mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
     });
-  </script>
+}
+
+function enviarFormulario() {
+    var nomeServicoElement = document.getElementById("nomeServico");
+    //var nomeServico = nomeServicoElement ? nomeServicoElement.value : '';
+
+    var descricaoServicoElement = document.getElementById("descricaoServico");
+    //var descricaoServico = descricaoServicoElement ? descricaoServicoElement.value : '';
+
+    var linkContatoElement = document.getElementById("linkContato");
+    //var linkContato = linkContatoElement ? linkContatoElement.value : '';
+
+    var dadosServico = {
+      nome: nomeServicoElement,
+      descricao: descricaoServicoElement,
+      link_contato: linkContatoElement
+    };
+
+    fetch('http://127.0.0.1:5000/criar_servicos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dadosServico)
+    })
+    .then(response => response.json())
+    .then(response => {
+      console.log(response);
+      if (response.message === 201) {
+        mostrarAlerta('success', 'Serviço criado com sucesso!');
+      } else {
+        mostrarAlerta('danger', 'Erro ao criar o serviço. Por favor, tente novamente.');
+      }
+    })
+    .catch(error => {
+      mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+    });
+
+    window.location.reload()
+
+    
+}
+
+function mostrarAlerta(tipo, mensagem) {
+    var alerta = document.createElement('div');
+    alerta.className = 'alert alert-' + tipo;
+    alerta.role = 'alert';
+    alerta.innerText = mensagem;
+
+    document.getElementById('alertas').appendChild(alerta);
+
+    setTimeout(function() {
+        alerta.remove();
+    }, 5000);
+}
+
+function excluirServico(id) {
+    fetch('http://127.0.0.1:5000/excluir_servicos/' + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    var linhaParaApagar = document.getElementById("linha"+id);
+        var tabela = linhaParaApagar.parentNode;
+        tabela.removeChild(linhaParaApagar);
+  }
+</script>
+
+
+
+<br><br>
+  <h2>Lista de servicos</h2>
+  <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaServicos">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>contato</th>
+              <th>Opções</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for servico in dados %}
+          <tr id='linha{{servico["id"]}}'>
+            <td>{{servico["id"]}}</td>
+            <td>{{servico["nome"]}}</td>
+            <td>{{servico["descricao"]}}</td>
+            <td>{{servico["contato"]}}</td>
+            <td>
+
+            <button type="button" class="btn btn-danger btn-sm" onClick="excluirServico({{servico,['id']}})">
+                 Excluir
+            </button>
+
+            </td>
+        </tr>
+
+          {% endfor %}
+      </tbody>
+  </table>
+
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $('#tabelaservicos').DataTable();
+    });
+    </script>
 {% endblock %}
+
