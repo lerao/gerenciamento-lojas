@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Pergunta Frequente
+  Perguntas Frequentes
 {% endblock %}
 
 {% block css %}{% endblock %}
@@ -12,20 +12,22 @@
   <form id="faqForm">
     <div class="form-group">
         <label for="Pergunta">Pergunta:</label>
-        <input type="text" class="form-control" id="Pergunta" placeholder="Ex: Como fazer login?" required>
+        <input type="text" class="form-control" id="Pergunta" placeholder="Ex: Como fazer um login?" required>
     </div>
 
     <div class="form-group">
         <label for="Resposta">Resposta:</label>
-        <textarea class="form-control" id="Resposta" placeholder="Responder a pergunta (até 255 caracteres)" maxlength="255"></textarea>
+
+        <textarea class="form-control" id="Resposta" placeholder="Resposta da pergunta (até 255 caracteres)" maxlength="255"></textarea>
     </div>
 
     <div class="form-group">
-        <label for="dataPergunta">Data:</label>
-        <input type="date" class="form-control" id="dataPergunta">
+        <label for="data">Data:</label>
+        <input type= "datetime" class="form-control" id="dataPergunta">
     </div>
 
-    <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Salvar</button>
+    <button type="submit" class="btn btn-primary" onclick="enviarFormulario()">Salvar</button>
+
 </form>
 
 <div id="alertas">
@@ -46,11 +48,13 @@
         })
         .then(response => response.json())
         .then(response => {
-            console.log(response)
+
+        console.log(response)
             
         })
         .catch(error => {
-            console.error('Erro ao enviar a requisição:', error);
+        console.error('Erro ao enviar a requisição:', error);
+
             mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
         });
     }
@@ -110,7 +114,9 @@
         }, 5000);
     }
 
-    function removerFaqs(idFaq) {
+
+    function removerFaq(idFaq) {
+
         //Usamos o fetch para enviar os dados
         fetch('http://127.0.0.1:5000/faq/'+idFaq, {
             method: 'DELETE',
@@ -123,8 +129,43 @@
         var tabela = linhaParaApagar.parentNode;
         tabela.removeChild(linhaParaApagar);
 
+    } 
+
+    function editarFaq(idFaq) {
+        var Pergunta = document.getElementById("Pergunta").value;
+        var Resposta = document.getElementById("Resposta").value;
+        var dataPergunta = document.getElementById("dataPergunta").value;
+
+        var novosDados = {
+            titulo: Pergunta,
+            descricao: Resposta,
+            data: dataPergunta
+        };
+        fetch('http://127.0.0.1:5000/faq/'+idFaq, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(novosDados)
+        })
+        .then(response => response.json())
+        .then(response => {
+            if (response.status ===200){
+                mostrarAlerta('success', 'Faq editada com sucesso.')
+            } else{
+                mostrarAlerta('danger', 'Erro ao editar o faq. Por favor, tente novamente');
+            }
+        })
+        .catch(error =>{
+            mostrarAlerta('danger', 'Erro ao conectar-se ao servidor.Por favor, tente novamente mais tarde.')
+        })
+
+        window.location.reload()
     }
-    </script>
+
+    
+</script>
+
 
   <br><br>
   <h2>Lista de Perguntas</h2>
@@ -148,8 +189,13 @@
             <td>
 
                 <button type="button" class="btn btn-danger btn-sm"
-                    onClick="removerPergunta({{faq['id']}})">
+
+                    onClick="removerFaq({{faq['id']}})">
                     Excluir
+                </button>
+
+                <button type="button" class="btn btn-primary btn-sm"
+                    onclick="editarFaq({{faq['id']}})"> Editar
                 </button>
 
             </td>
