@@ -5,141 +5,84 @@
 {% endblock %}
 
 {% block css %}
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.config {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    text-align: center;
-    max-width: 400px;
-}
-
-label {
-    display: block;
-    text-align: left;
-    margin-top: 10px;
-}
-
-input[type="text"], input[type="color"] {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.checkbox-group {
-    text-align: left;
-    margin-top: 5px;
-}
-
-input[type="checkbox"] {
-    margin-right: 5px;
-}
-</style>
+  <!-- Adicione qualquer estilo adicional aqui se necessário -->
 {% endblock %}
 
 {% block conteudo %}
 
-<form method="POST" action="/submit">
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" required><br>
+  <h2>Cadastro de Serviços</h2>
+  <form id="servicoForm">
+    <div class="form-group">
+      <label for="nomeServico">Nome do Serviço:</label>
+      <input type="text" class="form-control" id="nomeServico" placeholder="Ex: Limpeza" required>
+    </div>
 
-    <label for="descricao">Descrição do Serviço:</label><br>
-    <textarea id="descricao" name="descricao" rows="4" cols="50" required></textarea><br>
+    <div class="form-group">
+      <label for="descricaoServico">Descrição do Serviço:</label>
+      <textarea class="form-control" id="descricaoServico" placeholder="Descrição do serviço (até 255 caracteres)" maxlength="255"></textarea>
+    </div>
 
-    <label for="link_contato">Link para Contato:</label>
-    <input type="text" id="link_contato" name="link_contato" required><br>
+    <div class="form-group">
+      <label for="linkContato">Link para Contato:</label>
+      <input type="text" class="form-control" id="linkContato" placeholder="Link para contato">
+    </div>
 
-    <label for="categoria">Escolha a Categoria:</label>
-    <select id="categoria" name="categoria" required>
+    <div class="form-group">
+      <label for="categoriaServico">Escolha a Categoria:</label>
+      <select class="form-control" id="categoriaServico">
+        <!-- Adicione as opções de categorias dinamicamente, se necessário -->
         <option value="categoria1">Categoria 1</option>
         <option value="categoria2">Categoria 2</option>
-        <option value="categoria3">Categoria 3</option>
-    </select><br>
+        <!-- Adicione mais opções conforme necessário -->
+      </select>
+    </div>
 
-    <input type="submit" value="Enviar">
-</form>
-<table border="1">
-  <tr>
-      <th>Nome</th>
-      <th>Descrição do Serviço</th>
-      <th>Link para Contato</th>
-      <th>Categoria</th>
-  </tr>
-  <tr>
-      <td>Empresa A</td>
-      <td>Serviço de consultoria em marketing digital.</td>
-      <td><a href="https://www.empresaA.com/contato">Contato</a></td>
-      <td>Categoria 1</td>
-  </tr>
-  <tr>
-      <td>Empresa B</td>
-      <td>Desenvolvimento de aplicativos móveis sob medida.</td>
-      <td><a href="https://www.empresaB.com/contato">Contato</a></td>
-      <td>Categoria 2</td>
-  </tr>
-  <tr>
-      <td>Empresa C</td>
-      <td>Serviços de design gráfico e branding.</td>
-      <td><a href="https://www.empresaC.com/contato">Contato</a></td>
-      <td>Categoria 1</td>
-  </tr>
-  <tr>
-      <td>Empresa D</td>
-      <td>Hospedagem web e serviços de servidor dedicado.</td>
-      <td><a href="https://www.empresaD.com/contato">Contato</a></td>
-      <td>Categoria 3</td>
-  </tr>
-  <tr>
-      <td>Empresa E</td>
-      <td>Marketing de mídia social e gerenciamento de campanhas.</td>
-      <td><a href="https://www.empresaE.com/contato">Contato</a></td>
-      <td>Categoria 2</td>
-  </tr>
-  <tr>
-      <td>Empresa F</td>
-      <td>Desenvolvimento de software personalizado.</td>
-      <td><a href="https://www.empresaF.com/contato">Contato</a></td>
-      <td>Categoria 3</td>
-  </tr>
-  <tr>
-      <td>Empresa G</td>
-      <td>Serviços de consultoria financeira e contabilidade.</td>
-      <td><a href="https://www.empresaG.com/contato">Contato</a></td>
-      <td>Categoria 1</td>
-  </tr>
-  <tr>
-      <td>Empresa H</td>
-      <td>Desenvolvimento de jogos para dispositivos móveis.</td>
-      <td><a href="https://www.empresaH.com/contato">Contato</a></td>
-      <td>Categoria 2</td>
-  </tr>
-  <tr>
-      <td>Empresa I</td>
-      <td>Serviços de consultoria de TI e soluções de rede.</td>
-      <td><a href="https://www.empresaI.com/contato">Contato</a></td>
-      <td>Categoria 3</td>
-  </tr>
-  <tr>
-      <td>Empresa J</td>
-      <td>Desenvolvimento de sites e design web.</td>
-      <td><a href="https://www.empresaJ.com/contato">Contato</a></td>
-      <td>Categoria 1</td>
-  </tr>
-</table>
+    <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Adicionar Serviço</button>
+  </form>
+
+  <div id="alertas">
+    <!-- Espaço para exibir os alertas -->
+  </div>
+
+  <script>
+    // Restante do código permanece inalterado
+  </script>
+
+  <br><br>
+  <h2>Lista de Serviços</h2>
+  <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaServicos">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Link para Contato</th>
+        <th>Categoria</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for servico in dados %}
+      <tr id="linha{{servico["id"]}}">
+        <td>{{servico["id"]}}</td>
+        <td>{{servico["nome"]}}</td>
+        <td>{{servico["descricao"]}}</td>
+        <td>{{servico["link_contato"]}}</td>
+        <td>{{servico["categoria"]}}</td>
+        <td>
+          <button type="button" class="btn btn-danger btn-sm" onClick="removerServico({{servico["id"]}})">Excluir</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+  <script type='text/javascript'>
+    $(document).ready(function() {
+      $('#tabelaServicos').DataTable();
+    });
+  </script>
+{% endblock %}
