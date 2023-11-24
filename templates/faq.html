@@ -1,50 +1,158 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Perguntas Frequentes
+  Pergunta Frequente
 {% endblock %}
 
 {% block css %}{% endblock %}
 
 {% block conteudo %}
 
-  <h2>Cadastro de Perguntas Frequentes</h2>
-  <form id="faqform">
-      
+  <h2>Cadastro de Perguntas</h2>
+  <form id="faqForm">
     <div class="form-group">
+        <label for="Pergunta">Pergunta:</label>
+        <input type="text" class="form-control" id="Pergunta" placeholder="Ex: Como fazer login?" required>
+    </div>
 
-        <label for="Titulo">Pergunta:</label>
-        <input type="text" class="form-control" id="titulo" name="pergunta" required>
-        <br><br>
-        <label for="descricao">Resposta:</label>
-        <input type="text" id="descricao" name="descricao">
-        <br><br>
-        <label for="data">data:</label>
-        <input type="date" id="data" name="data">
+    <div class="form-group">
+        <label for="Resposta">Resposta:</label>
+        <textarea class="form-control" id="Resposta" placeholder="Responder a pergunta (até 255 caracteres)" maxlength="255"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="dataPergunta">Data:</label>
+        <input type="date" class="form-control" id="dataPergunta">
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Salvar</button>
+</form>
+
+<div id="alertas">
+    <!-- Espaço para exibir os alertas -->
+</div>
+
+<script>
+    
+    carregarDados();
+
+    function carregarDados() {
+         //Usamos o fetch para enviar os dados
+         fetch('http://127.0.0.1:5000/faq', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+            
+        })
+        .catch(error => {
+            console.error('Erro ao enviar a requisição:', error);
+            mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+        });
+    }
+
+    function enviarFormulario() {
+
+        //Recuperamos os valores dos form
+        var Pergunta = document.getElementById("Pergunta").value;
+        var Resposta = document.getElementById("Resposta").value;
+        var dataPergunta = document.getElementById("dataPergunta").value;
+
+        //Montamos o json para envio/cadastro
+        var dadosFaq = {
+            titulo: Pergunta,
+            descricao: Resposta,
+            data: dataPergunta
+        };
+
+        //Usamos o fetch para enviar os dados
+        fetch('http://127.0.0.1:5000/faq', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dadosFaq)
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+            console.log(response.status)
+            if (response.status === 201) {
+                mostrarAlerta('success', 'Pergunta criada com sucesso!');
+            } else {
+                mostrarAlerta('danger', 'Erro ao criar a Pergunta. Por favor, tente novamente.');
+            }
+        })
+        .catch(error => {
+            mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+        });
+
+        window.location.reload()
+    }
+
+    function mostrarAlerta(tipo, mensagem) {
+        // Crie um elemento de alerta dinamicamente
+        var alerta = document.createElement('div');
+        alerta.className = 'alert alert-' + tipo;
+        alerta.role = 'alert';
+        alerta.innerText = mensagem;
+
+        // Adicione o alerta à div 'alertas'
+        document.getElementById('alertas').appendChild(alerta);
+
+        // Remova o alerta após alguns segundos (opcional)
+        setTimeout(function() {
+            alerta.remove();
+        }, 5000);
+    }
+
+    function removerFaqs(idFaq) {
+        //Usamos o fetch para enviar os dados
+        fetch('http://127.0.0.1:5000/faq/'+idFaq, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
         
-    </div>   
+        var linhaParaApagar = document.getElementById("linha"+idFaq);
+        var tabela = linhaParaApagar.parentNode;
+        tabela.removeChild(linhaParaApagar);
 
-      <button type="submit" class="btn btn-primary">Salvar</button>
-  </form>
+    }
+    </script>
+
   <br><br>
-
-  <h2>Pergunta Frequentes</h2>
-
-  <table class="table table-striped">
+  <h2>Lista de Perguntas</h2>
+  <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaFaq">
       <thead>
           <tr>
-              <th>Titulo</th>
-              <th>Descrição</th>
+              <th>ID</th>
+              <th>Pergunta</th>
+              <th>Resposta</th>
               <th>Data</th>
+              <th>Opções</th>
           </tr>
       </thead>
-      <tbody id="tabelafaqs">
-          
-          {% for FAQ in dados %}
-          <tr>
-            <td>{{FAQ['titulo']}}</td>
-            <td>{{FAQ['descricao']}}</td>
-            <td>{{FAQ['data']}}</td>
+      <tbody>
+          {% for faq in dados %}
+          <tr id="linha{{faq['id']}}">
+            <td>{{faq["id"]}}</td>
+            <td>{{faq["titulo"]}}</td>
+            <td>{{faq["descricao"]}}</td>
+            <td>{{faq["data"]}}</td>
+            <td>
+
+                <button type="button" class="btn btn-danger btn-sm"
+                    onClick="removerPergunta({{faq['id']}})">
+                    Excluir
+                </button>
+
+            </td>
         </tr>
 
           {% endfor %}
@@ -53,4 +161,10 @@
 
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $('#tabelaFaq').DataTable();
+    });
+    </script>
+{% endblock %}
