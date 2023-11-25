@@ -1,40 +1,35 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Título de Teste
+  Categorias
 {% endblock %}
 
 {% block css %}{% endblock %}
 
 {% block conteudo %}
 
-  <h1>Promocao Form</h1>
-  <!-- Input de Data Final -->
+<h1>Promocao</h1>
 
-  <form id="categoriaForm">
-    <div class="form-group">
-      <label for="data_inicial">Data Inicial:</label>
-      <input type="date" class="form-control" id="data_inicial" name="data_inicial">
-    </div>
-    <div class="form-group">
-      <label for="data_final">Data Final:</label>
-      <input type="date" class="form-control" id="data_final" name="data_final">
-    </div>
-    <!-- Remova a linha com o erro de class -->
-  </form>
 
-  <!-- Input de produto -->
+<form id="categoriaForm">
   <div class="form-group">
-    <label for="produto">Produto:</label>
-    <input type="text" class="form-control" id="produto" name="produto">
+    <label for="data_inicial">Data Inicial:</label>
+    <input type="date" class="form-control" id="data_inicial" name="data_inicial">
+  </div>
+  <div class="form-group">
+    <label for="data_final">Data Final:</label>
+    <input type="date" class="form-control" id="data_final" name="data_final">
+  </div>
+
+</form>
+<div class="form-group">
+    <label for="produto_id">Produto:</label>
+    <input type="text" class="form-control" id="produto_id" name="produto">
   </div>
 
   <label for="ativo">Ativo:</label>
   <input type="checkbox id="ativo" name="ativo">
-
-  <!-- Remova a tag de formulário duplicada aqui -->
-  <br><br>
-  <input type="submit" value="Submit">
+  <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Adicionar</button>
 
   <h2>Oferta Especial</h2>
 
@@ -43,12 +38,12 @@
   <p>Produto em destaque: Nome do Produto</p>
   <input type="text" id="Nome do Produto" name="ativo">
   <p>Desconto: 20%</p>
-  <input type="text" id="ativo" name="ativo">
+  <input type="text" id="ativo2" name="ativo">
   <p>Preço original: R$100,00</p>
-  <input type="text" id="ativo" name="ativo">
+  <input type="text" id="ativo3" name="ativo">
   <p>Novo preço: R$80,00>
     <br></br>
-    <input type="text" id="ativo" name="ativo">
+    <input type="text" id="ativo4" name="ativo">
     <br></br>
     <text>Compre Agora</text>
     <br></br>
@@ -57,19 +52,142 @@
   Teste conteúdo
   <br></br>
   <input type="text" id= "teste_conteudo" name="ativo">
-{% block js %}
-  <h2>Lista de Categorias</h2>
-  <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaCategorias">
-    <!-- ... conteúdo da tabela ... -->
+<script>
+    
+    carregarDados();
+
+    function carregarDados() {
+         //Usamos o fetch para enviar os dados
+         fetch('http://127.0.0.1:5000/promocoes', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+            
+        })
+        .catch(error => {
+            console.error('Erro ao enviar a requisição:', error);
+            mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+        });
+    }
+
+    function enviarFormulario() {
+
+        //Recuperamos os valores dos form
+        var data_inicial = document.getElementById("data_inicial").value;
+        var data_final = document.getElementById("data_final").value;
+        var ativo = document.getElementById("ativo").value;
+        var produto_id = document.getElementById("produto_id").value;
+
+        //Montamos o json para envio/cadastro
+        var dadosPromocoes = {
+            data_inicial: data_inicial,
+            data_final: data_final,
+            produto_id: produto_id,
+            ativo: ativo
+        };
+
+        //Usamos o fetch para enviar os dados
+        fetch('http://127.0.0.1:5000/promocoes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dadosPromoces)
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+            console.log(response.status)
+            if (response.status === 201) {
+                mostrarAlerta('success', 'Promoção criada com sucesso!');
+            } else {
+                mostrarAlerta('danger', 'Erro ao criar a promoção. Por favor, tente novamente.');
+            }
+        })
+        .catch(error => {
+            mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+        });
+
+        window.location.reload()
+    }
+
+    function mostrarAlerta(tipo, mensagem) {
+        // Crie um elemento de alerta dinamicamente
+        var alerta = document.createElement('div');
+        alerta.className = 'alert alert-' + tipo;
+        alerta.role = 'alert';
+        alerta.innerText = mensagem;
+
+        // Adicione o alerta à div 'alertas'
+        document.getElementById('alertas').appendChild(alerta);
+
+        // Remova o alerta após alguns segundos (opcional)
+        setTimeout(function() {
+            alerta.remove();
+        }, 5000);
+    }
+
+    function removerPromoca(idPromocoes) {
+        //Usamos o fetch para enviar os dados
+        fetch('http://127.0.0.1:5000/promocoes/'+idPromocoes, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        var linhaParaApagar = document.getElementById("linha"+idPromocoes);
+        var tabela = linhaParaApagar.parentNode;
+        tabela.removeChild(linhaParaApagar);
+
+    }
+    </script>
+
+  <br><br>
+  <h2>Lista de Promoções</h2>
+  <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaPromocoes">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Data inicial</th>
+              <th>Data final</th>
+              <th>Produto ID</th>
+              <th>Ativo</th>
+              
+          </tr>
+      </thead>
+      <tbody>
+          {% for promocoes in dados %}
+          <tr id="linha{{promocao["id"]}}">
+            <td>{{promocoes["id"]}}</td>
+            <td>{{promocoes["data_inicial"]}}</td>
+            <td>{{promocoes["data_final"]}}</td>
+            <td>{{promocoes["produto_id"]}}</td>
+            <td>
+
+                <button type="button" class="btn btn-danger btn-sm"
+                    onClick="removerPromocao(promocoes["id"]}})">
+                    Excluir
+                </button>
+
+            </td>
+        </tr>
+
+          {% endfor %}
+      </tbody>
   </table>
 
-  <script type='text/javascript'>
-    $(document).ready(function () {
-      $('#tabelaCategorias').DataTable();
+{% endblock %}
+
+{% block js %}
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $('#tabelaPromocoes').DataTable();
     });
-  </script>
+    </script>
 {% endblock %}
-
-{% endblock %}
-
-
