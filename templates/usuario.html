@@ -11,10 +11,7 @@
   <h2>Gerenciamento de Usuário</h2>
  
         <form>
-            <div class="form-group">
-                <label for="id">ID:</label>
-                <input type="text" class="form-control" id="id" placeholder="ID">
-            </div>
+           
             <div class="form-group">
                 <label for="nome">Nome:</label>
                 <input type="text" class="form-control" id="nome" placeholder="Nome">
@@ -29,40 +26,144 @@
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
+        <div id="alertas">
+            <!-- Espaço para exibir os alertas -->
+        </div>
 
-        <h2>Lista de Usuários</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>João da Silva</td>
-                    <td>joao@example.com</td>
-                    <td>
-                        <a href="#" class="btn btn-info">Editar</a>
-                        <a href="#" class="btn btn-danger">Excluir</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Maria Souza</td>
-                    <td>maria@example.com</td>
-                    <td>
-                        <a href="#" class="btn btn-info">Editar</a>
-                        <a href="#" class="btn btn-danger">Excluir</a>
-                    </td>
-                </tr>
-                <!-- Adicione mais linhas de acordo com seus dados -->
-            </tbody>
-        </table>
+
+<script>
+    
+    carregarDados();
+
+    function carregarDados() {
+         //Usamos o fetch para enviar os dados
+         fetch('http://127.0.0.1:5000/usuarios', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+            
+        })
+        .catch(error => {
+            console.error('Erro ao enviar a requisição:', error);
+            mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+        });
+    }
+
+    function enviarFormulario() {
+
+        //Recuperamos os valores dos form
+        var nomeUsuario = document.getElementById("nome").value;
+        var emailUsuario = document.getElementById("email").value;
+        var senhaUsuario = document.getElementById("senha").value;
+
+        //Montamos o json para envio/cadastro
+        var dadosUsuario = {
+            nome: nomeUsuario,
+            email: emailUsuario,
+            senha: senhaUsuario
+        };
+
+        //Usamos o fetch para enviar os dados
+        fetch('http://127.0.0.1:5000/usuarios', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dadosUsuario)
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+            console.log(response.status)
+            if (response.status === 201) {
+                mostrarAlerta('success', 'Usuário criado com sucesso!');
+            } else {
+                mostrarAlerta('danger', 'Erro ao criar o usuário. Por favor, tente novamente.');
+            }
+        })
+        .catch(error => {
+            mostrarAlerta('danger', 'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
+        });
+
+        window.location.reload()
+    }
+
+    function mostrarAlerta(tipo, mensagem) {
+        // Crie um elemento de alerta dinamicamente
+        var alerta = document.createElement('div');
+        alerta.className = 'alert alert-' + tipo;
+        alerta.role = 'alert';
+        alerta.innerText = mensagem;
+
+        // Adicione o alerta à div 'alertas'
+        document.getElementById('alertas').appendChild(alerta);
+
+        // Remova o alerta após alguns segundos (opcional)
+        setTimeout(function() {
+            alerta.remove();
+        }, 5000);
+    }
+
+    function removerUsuario(idUsuario) {
+        //Usamos o fetch para enviar os dados
+        fetch('http://127.0.0.1:5000/usuarios/'+idUsuario, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        var linhaParaApagar = document.getElementById("linha"+idUsuario);
+        var tabela = linhaParaApagar.parentNode;
+        tabela.removeChild(linhaParaApagar);
+
+    }
+    </script>
+
+  <br><br>
+  <h2>Lista de Usuários</h2>
+  <table class="table table-md table-bordered table-striped table-hover table-light" id="tabelaUsuarios">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>email</th>
+              <th>senha</th>
+              
+          </tr>
+      </thead>
+      <tbody>
+          {% for usuario in dados %}
+          <tr id="linha{{usuario['id']}}">
+            <td>{{usuario["id"]}}</td>
+            <td>{{usuario["nome"]}}</td>
+            <td>{{usuario["email"]}}</td>
+            <td>{{usuario["senha"]}}</td>
+            <td>
+
+                <button type="button" class="btn btn-danger btn-sm"
+                    onClick="removerUsuario({{usuario['id']}})">
+                    Excluir
+                </button>
+
+            </td>
+        </tr>
+
+          {% endfor %}
+      </tbody>
+  </table>
 
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $('#tabelaUsuarios').DataTable();
+    });
+    </script>
+{% endblock %}
